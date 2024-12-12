@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-stage>
+<stage zoom="0.52">
+	<sprite x="-687" name="Codename VC" sprite="Codename VC" y="-238"/>
+	<gf x="548" y="108"/>
+	<dad x="10" y="150"/>
+	<bf x="1100"/>
+	<combo x="1102" y="418"/>
+</stage>

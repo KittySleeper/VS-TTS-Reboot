@@ -1,0 +1,8 @@
+<!DOCTYPE codename-engine-character>
+<character icon="TTS" color="#009EEC" y="250">
+	<anim name="idle" anim="tts idle" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="tts left" x="345" y="200" fps="24" loop="false"/>
+	<anim name="singUP" anim="tts up" x="59" y="420" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="tts down" x="-20" y="-25" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="tts right" x="-18" y="13" fps="24" loop="false"/>
+</character>

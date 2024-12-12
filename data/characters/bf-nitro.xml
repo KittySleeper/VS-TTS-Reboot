@@ -1,0 +1,13 @@
+<!DOCTYPE codename-engine-character>
+<character x="-450" y="350" flipX="true" color="#47FFD1">
+	<anim name="idle" anim="BF idle dance" x="0" y="0" fps="24" loop="false"/>
+	<anim name="singUP" anim="BF NOTE UP instance" x="21" y="27" fps="24" loop="false"/>
+	<anim name="singLEFT" anim="BF NOTE RIGHT instance" x="37" y="-5" fps="24" loop="false"/>
+	<anim name="singRIGHT" anim="BF NOTE LEFT instance" x="-32" y="-8" fps="24" loop="false"/>
+	<anim name="singDOWN" anim="BF NOTE DOWN instance" x="-26" y="-57" fps="24" loop="false"/>
+	<anim name="singLEFTmiss" anim="RIT MISS instance 1" x="-35" y="7" fps="24" loop="false"/>
+	<anim name="singUPmiss" anim="U MISS instance 1" x="-74" y="-3" fps="24" loop="false"/>
+	<anim name="singDOWNmiss" anim="DON MISS" x="-71" y="-39" fps="24" loop="false"/>
+	<anim name="singRIGHTmiss" anim="LFT MISS" x="-95" y="-10" fps="24" loop="false"/>
+	<anim name="hey" anim="BF HEY" x="7" y="-1" fps="24" loop="false"/>
+</character>
