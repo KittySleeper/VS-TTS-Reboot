@@ -21,7 +21,7 @@ function create() {
         var box = new FlxSprite().makeSolid(1070, 800, char.iconColor);
         box.shader = new CustomShader("bevelShader");
         box.shader.corner_scale = 0.05;
-        
+
         box.setPosition((bgSprite.x + 400) + ((box.width + 15) * idx), bgSprite.y + 400);
         backgrounds.add(box);
     }
@@ -47,6 +47,21 @@ function create() {
     
 }
 
+var camGame_notes:FlxCamera;
+function postCreate() {
+    // camGame_notes = new FlxCamera();
+    // camGame_notes.bgColor = FlxColor.TRANSPARENT;
+    // var oldList = FlxG.cameras.list;
+    // for (camera in FlxG.cameras.list) {
+    //     if (camera == camGame) continue;
+    //     FlxG.cameras.remove(camera, true);
+    // }
+    // FlxG.cameras.add(camGame_notes, false);
+    // for (camera in oldList) {
+    //     FlxG.cameras.add(camera, false);
+    // }
+}
+
 function killLJidnc() {
     for (idx in 0...strumLines.members.length) {
         var strumLine = strumLines.members[idx];
@@ -56,7 +71,11 @@ function killLJidnc() {
         for (jdx in 0...strumLine.members.length) {
             var strum = strumLine.members[jdx];
             strum.x = bgBox.x + bgBox.width * 0.5 - (strum.width)*(4 - (jdx+1)) + (strum.width*0.75);
-            strum.y = bgBox.y - strum.height * 0.75;
+            // if (downscroll) {
+            //     strum.y = bgBox.y + bgBox.height - strum.height * 2;
+            // } else
+                strum.y = bgBox.y - strum.height * 0.75;
+            strum.extra.set("validYPos", strum.y);
         }
     }
 }
@@ -81,4 +100,14 @@ function noteUpdate(e) {
     e.cancelPositionUpdate();
     daNote.alpha = FlxMath.lerp(daNote.alpha, 0, FlxG.elapsed*5);
     daNote.angle = FlxMath.lerp(daNote.angle, daNote.extra.get("randomAngle"), FlxG.elapsed*2);
+}
+
+function onNoteHit(e) {
+    var note = e.note;
+    var strumLine = note.strumLine;
+    var strum = strumLine.members[e.direction];
+    if (note.isSustainNote || !strum.extra.exists("validYPos")) return;
+    var yDir = (downscroll) ? 7 : 15;
+    strum.y -= yDir;
+    FlxTween.tween(strum, {y: strum.extra.get("validYPos")}, 0.35, {ease: FlxEase.quartIn});
 }
