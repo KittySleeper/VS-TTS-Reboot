@@ -67,7 +67,8 @@ function killLJidnc() {
         var strumLine = strumLines.members[idx];
         var bgBox = backgrounds.members[idx];
         strumLine.camera = camGame;
-        strumLine.onNoteUpdate.add(noteUpdate);
+        strumLine.onNoteDelete.add(onNoteDelete);
+        strumLine.onNoteUpdate.add(onNoteUpdate);
         for (jdx in 0...strumLine.members.length) {
             var strum = strumLine.members[jdx];
             strum.x = bgBox.x + bgBox.width * 0.5 - (strum.width)*(4 - (jdx+1)) + (strum.width*0.75);
@@ -88,18 +89,25 @@ function onCameraMove(e) {
 }
 
 var noteLeavingAngle:Float = 45;
-function noteUpdate(e) {
+function onNoteDelete(e) {
     var daNote = e.note;
-    if (!(daNote.strumTime < Conductor.songPosition -( PlayState.instance.hitWindow *0.45) && !daNote.wasGoodHit)) return;
-    
-    if (!daNote.extra.exists("randomAngle")) {
-        FlxTween.tween(daNote, {y: daNote.y - 200}, Conductor.crochet / 1000, {ease: FlxEase.sineInOut});
-        daNote.extra.set("randomAngle", FlxG.random.int(-noteLeavingAngle, noteLeavingAngle));
+    if (!daNote.tooLate) return;
+    if (daNote.extra.exists("doNoteFuckery")) {
+        return;
     }
+    daNote.extra.set("doNoteFuckery", true);
+    e.cancel();
 
-    e.cancelPositionUpdate();
-    daNote.alpha = FlxMath.lerp(daNote.alpha, 0, FlxG.elapsed*5);
-    daNote.angle = FlxMath.lerp(daNote.angle, daNote.extra.get("randomAngle"), FlxG.elapsed*2);
+    var _angle = FlxG.random.int(-noteLeavingAngle, noteLeavingAngle);
+    FlxTween.tween(daNote, {y: daNote.y - 50, angle: _angle, alpha: 0}, Conductor.crochet / 1000, {ease: FlxEase.circOut, onComplete: function() {
+        daNote.strumLine.deleteNote(daNote);
+    }});
+}
+
+function onNoteUpdate(e) {
+    var daNote = e.note;
+    if (!daNote.extra.exists("doNoteFuckery")) return;
+    e.cancel();
 }
 
 function onNoteHit(e) {
