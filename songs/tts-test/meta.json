@@ -1,0 +1,17 @@
+{
+	"beatsPerMeasure": 4,
+	"opponentModeAllowed": false,
+	"coopAllowed": false,
+	"stepsPerBeat": 4,
+	"bpm": 165,
+	"difficulties": [
+		"Hard"
+	],
+	"needsVoices": false,
+	"parsedColor": -1,
+	"displayName": "TTS Test",
+	"icon": "Icon",
+	"name": "tts-test",
+	"color": "#FFFFFF",
+	"customValues": {}
+}

@@ -19,8 +19,7 @@ function create() {
     for (idx in 0...characters.length) {
         var char = characters[idx];
         var box = new FlxSprite().makeSolid(1070, 800, char.iconColor);
-        box.shader = new CustomShader("bevelShader");
-        box.shader.corner_scale = 0.05;
+        add_roundedShader(box, 25, true, true);
 
         box.setPosition((bgSprite.x + 400) + ((box.width + 15) * idx), bgSprite.y + 400);
         backgrounds.add(box);
@@ -35,8 +34,7 @@ function create() {
         charName.font = Paths.font("discord.ttf");
 
         var shadowBox = new FlxSprite().makeSolid(charName.width + textOffset, charName.height + textOffset, 0xFF000000);
-        shadowBox.shader = new CustomShader("bevelShader");
-        shadowBox.shader.corner_scale = 0.4;
+        add_roundedShader(shadowBox, 15, true, true);
         shadowBox.alpha = 0.65;
         shadowBox.setPosition(bgBox.x + textOffset, bgBox.y + bgBox.height - shadowBox.height - textOffset);
         playerNames.add(shadowBox);
