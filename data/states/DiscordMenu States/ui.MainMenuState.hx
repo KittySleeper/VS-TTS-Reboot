@@ -227,7 +227,7 @@ function serverTween(?time:Float) {
 }
 
 function update(elapsed:Float) {
-	if (controls.SWITCHMO0D && !isTyping) {
+	if (controls.SWITCHMOD && !isTyping) {
 		persistentUpdate = false;
 		persistentDraw = true;
 		openSubState(new ModSwitchMenu());
