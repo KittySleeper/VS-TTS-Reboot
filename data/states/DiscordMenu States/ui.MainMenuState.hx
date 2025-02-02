@@ -3,6 +3,7 @@
 import funkin.backend.utils.DiscordUtil;
 import flixel.group.FlxTypedSpriteGroup;
 import openfl.display.BitmapData;
+import openfl.display.Bitmap;
 
 import funkin.menus.ModSwitchMenu;
 import funkin.editors.EditorPicker;
@@ -308,3 +309,66 @@ function destroyScript(script:Script, group) {
     script?.active = false;
     script?.destroy();
 }
+
+// import openfl.Lib;
+// import lime.ui.Window;
+// import openfl.display.Sprite;
+// import lime.app.Application;
+// import funkin.backend.assets.ModsFolder;
+
+// var test = new Sprite();
+// function postCreate() {
+//     var testBitmapData = BitmapData.fromFile(Paths.image("game/go"));
+//     trace("testBitmapData: " + testBitmapData);
+//     new FlxTimer().start(0.10, function(timer) {
+//         var app = Lib.application.createWindow({
+//             title: "NO I DONT",
+//             width: 1280,
+//             height: 720,
+//             borderless: false,
+//             alwaysOnTop: true,
+//             frameRate: 60,
+//         });
+
+//         app.x = 30;
+//         app.y = 100;
+
+//         app.stage.color = 0xFF2FFF00;
+//         test.addChild(new Bitmap(testBitmapData));
+//         app.stage.addChild(test);
+//     });
+// }
+
+// import openfl.Lib;
+// import lime.ui.Window;
+// import flixel.util.FlxTimer;
+// import openfl.geom.Matrix;
+// import openfl.geom.Rectangle;
+// import openfl.display.Sprite;
+// import lime.app.Application;
+// import openfl.display.BitmapData;
+// import openfl.display.Bitmap;
+// import flixel.math.FlxMath;
+// var bf = new Sprite();
+// function postCreate()
+// {
+//     new FlxTimer().start(0.10, function(timer)
+//     {
+//         var app = Lib.application.createWindow({
+//             title: "LJ LIKES MEN",
+//             width: 1280,
+//             height: 720,
+//             borderless: false,
+//             alwaysOnTop: true,
+//             frameRate: 200,
+//         });
+
+//         app.x = 30;
+//         app.y = 100;
+
+//         app.stage.color = 0xFF2FFF00;
+//         bf = new Sprite();
+//         bf.addChild(new Bitmap(BitmapData.fromFile("assets/images/menus/LJ.png")));
+//         app.stage.addChild(bf);
+//     });
+// }
