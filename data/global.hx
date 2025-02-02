@@ -14,6 +14,7 @@ function preStateSwitch() {
         var state = (StringTools.startsWith(name, "ui.")) ? new UIState(true, data) : new ModState(data);
         FlxG.game._requestedState = new ModState(redirectStates.get(redirectState));
     }
+    // window.borderless = true;
 }
 
 function destroy() {
@@ -31,4 +32,19 @@ static function add_roundedShader(sprite:FlxSprite, corner_pixel:Float, ?use_pix
     sprite.shader.use_pixels = use_pixels;
     sprite.shader.custom_size = custom_size;
     sprite.shader.box_size = box_size;
+}
+
+static function getMouseCameraPos(camera:FlxCamera) {
+    if (camera == null) return FlxG.mouse.getWorldPosition(FlxG.camera);
+    // bruh errors
+    var _mousePos = 0;
+    try {
+        _mousePos = FlxG.mouse.getWorldPosition(camera);
+    } catch(e:Error) {}
+    return _mousePos;
+}
+
+static function mouseOver(object:FlxBasic, camera:FlxCamera) {
+    var mousePos = getMouseCameraPos(camera);
+    return (mousePos.x > object.x && mousePos.x < object.x + object.width && mousePos.y > object.y && mousePos.y < object.y + object.height);
 }

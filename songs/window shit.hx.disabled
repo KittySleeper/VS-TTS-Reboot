@@ -1,0 +1,16 @@
+import openfl.system.Capabilities;
+
+// try not to divide a lot, it slows down calculations.
+var winPos = {x: (Capabilities.screenResolutionX * 0.5 - window.width * 0.5), y: (Capabilities.screenResolutionY * 0.5 - window.height * 0.5)};
+
+function create() {
+    // no need to recalc if we have the data
+    window.x = winPos.x;
+    window.y = winPos.y;
+}
+
+var time:Float = 0;
+function update(elapsed) {
+    time += elapsed;
+    window.y = winPos.y + (Math.sin(time * 2)*20);
+}
