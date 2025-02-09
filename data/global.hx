@@ -1,3 +1,4 @@
+//a
 import funkin.backend.MusicBeatTransition;
 import funkin.editors.ui.UIState;
 
@@ -50,8 +51,7 @@ function preStateSwitch() {
 }
 
 function destroy() {
-	tipList = null;
-	_lastTip = null;
+	tipList = _lastTip = null;
 	
 	FlxG.camera.bgColor = 0xFF000000;
 }
