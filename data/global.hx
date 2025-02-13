@@ -2,7 +2,7 @@
 import funkin.backend.MusicBeatTransition;
 import funkin.editors.ui.UIState;
 
-//region helper functions
+// region helper functions
 static function add_roundedShader(sprite:FlxSprite, corner_pixel:Float, ?use_pixels:Bool = true, ?custom_size:Bool = false, ?box_size:Array<Float>) {
 	var custom_size = custom_size ?? false;
 	var box_size = box_size ?? [sprite.width, sprite.height];
@@ -29,16 +29,21 @@ static function mouseOver(object:FlxBasic, camera:FlxCamera) {
 	var mousePos = getMouseCameraPos(camera);
 	return (mousePos.x > object.x && mousePos.x < object.x + object.width && mousePos.y > object.y && mousePos.y < object.y + object.height);
 }
-//endregion
+// endregion
 
-static var tipList:Array<String> = CoolUtil.coolTextFile(Paths.file("data/tips.txt"));
+static var tipList:Array<String> = [];
 static var _lastTip:String = "";
 
 var redirectStates:Map<FlxState, String> = [
 	MainMenuState => "DiscordMenu States/ui.MainMenuState",
 ];
 
-function new() MusicBeatTransition.script = "data/scripts/DiscordTransition";
+function new() {
+	_lastTip = "";
+	tipList = CoolUtil.coolTextFile(Paths.file("data/tips.txt"));
+
+	MusicBeatTransition.script = "data/scripts/DiscordTransition";
+}
 
 function preStateSwitch() {
 	for (redirectState in redirectStates.keys()) {
@@ -46,7 +51,7 @@ function preStateSwitch() {
 		var data = redirectStates.get(redirectState);
 		var name = data.split("/").pop();
 		var state = (StringTools.startsWith(name, "ui.")) ? new UIState(true, data) : new ModState(data);
-		FlxG.game._requestedState = new ModState(redirectStates.get(redirectState));
+		FlxG.game._requestedState = state;
 	}
 }
 

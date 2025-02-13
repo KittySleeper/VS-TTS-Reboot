@@ -1,4 +1,5 @@
-//a
+// This is a UIState
+import funkin.editors.ui.UIState;
 
 import funkin.backend.utils.DiscordUtil;
 import flixel.group.FlxTypedSpriteGroup;
@@ -204,7 +205,7 @@ function setHoveredServer(serverIcon:FlxSprite, idx:Int) {
         });
     }
     if (hoveredServer) return;
-    Mouse.cursor = "button";
+    UIState.state.currentCursor = "button";
     textServer.fieldWidth = 0;
     hoveredServer = true;
     
@@ -214,7 +215,7 @@ function setHoveredServer(serverIcon:FlxSprite, idx:Int) {
 var fadeServerTween:FlxTween;
 function unHoverServer() {
     if (!hoveredServer) return;
-    Mouse.cursor = "arrow";
+    UIState.state.currentCursor = "arrow";
     hoveredServer = false;
 
     serverTween();
@@ -259,7 +260,9 @@ function update(elapsed:Float) {
         }
         hoveredItems++;
     }
-    if (hoveredItems == serverIconGroup.members.length) unHoverServer(); 
+    if (hoveredItems == serverIconGroup.members.length) unHoverServer();
+    
+    isTyping = (UIState.state.currentFocus != null);
 }
 
 var __layoutScript_category:Script;
@@ -288,8 +291,6 @@ function initScript(script:Script, _group, _camera:FlxCamera, ?extra) {
         group.add(item);
     });
     script.set("getCamera", () -> { return camera; });
-    script.set("getTyping", () -> { return isTyping; });
-    script.set("setTyping", (value) -> { isTyping = (value == true) ? true : false; });
 
     addExtra(script);
 

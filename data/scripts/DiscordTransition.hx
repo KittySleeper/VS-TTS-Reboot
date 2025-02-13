@@ -1,3 +1,4 @@
+//a
 import hxvlc.flixel.FlxVideoSprite;
 
 var subCamera:FlxCamera;
@@ -19,6 +20,7 @@ function create(e) {
 	loadBG = new FunkinSprite().makeSolid(FlxG.width, FlxG.height, 0xFF24242C);
 	add(loadBG);
 
+	_lastTip ??= FlxG.random.getObject(tipList);
 	tipText = new FunkinText(0, FlxG.height*0.5 + 112.5, FlxG.width, !e.transOut ? _lastTip : _lastTip = FlxG.random.getObject(tipList));
 	tipText.setFormat(Paths.font("Discord Fonts/Bold.TTF"), 20, 0xFFFFFFFF, "center");
 	tipText.borderSize = 0;
