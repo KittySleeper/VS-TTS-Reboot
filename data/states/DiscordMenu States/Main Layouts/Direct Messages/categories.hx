@@ -8,7 +8,7 @@ var mainScript:Script;
 
 var _camera = FlxG.camera;
 
-var selectedFriend:Int = -1;
+var selectedFriend:Int = 0;
 function create() {
     _camera = getCamera();
     mainScript = getMainScript();
@@ -42,7 +42,7 @@ function create() {
         
         underIcon.onDraw = function(sprite:FlxSprite) {
             var hovered = mouseOver(sprite, _camera);
-            sprite.alpha = hovered ? 0.6 : 0;
+            sprite.alpha = (hovered || selectedFriend == idx) ? 0.6 : 0;
             sprite.draw();
 
             if (!mouseOver(sprite, _camera)) return;
@@ -53,9 +53,12 @@ function create() {
         add(text);
         add(icon);
     }
+
+    updateSelectedFriend(0);
 }
 
 function updateSelectedFriend(idx:Int) {
     selectedFriend = idx;
-    
+    mainScript.call("_setUserData", [friendsTest[selectedFriend]]);
+    mainScript.call("updateMessages", [friendsTest[selectedFriend]]);
 }

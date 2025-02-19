@@ -11,14 +11,6 @@ import funkin.editors.ui.UITextBox;
 import StringTools;
 var _camera:FlxCamera;
 
-/*
-    Format:
-    {id: 0, text: "hello!", embeds: [], components: []}
-*/
-var messages = [
-    {}
-];
-
 var bar_color = 0xFF383a40;
 var barMessage:FlxSprite;
 
@@ -52,26 +44,33 @@ var inputData = {
         if (pos == -1) inputData.isHighlighting = false;
         else inputData.isHighlighting = true;
     }
-}
-function initMessageTextUI() {
-    // redoing
+};
 
+function initMessageTextUI() {
     highlight_sprite = new FlxSprite().makeGraphic(50, 1, 0xFF0b40ab);
     add(highlight_sprite);
 
-    textBox = new UITextBox(0, 0, "Message @NO ONE FUCK YOU!!", (barMessage.width - (addFilesIcon.width + 25)), barMessage.height);
+    textBox = new UITextBox(0, 0, userData.__getMessageString(), (barMessage.width - (addFilesIcon.width + 25)), barMessage.height);
     textBox.autoAlpha = false;
     textBox.x = barMessage.x + barMessage.width - textBox.bWidth;
     textBox.y = barMessage.y + barMessage.height * 0.5 - textBox.bHeight * 0.5;
     textBox.alpha = 0;
     textBox.label.setFormat(Paths.font("Discord Fonts/Bold.TTF"), 18, 0xFFFFFFFF, "left");
+    textBox.label.alpha = 0.5;
 
 	textBox.caretSpr.scale.set(1, textBox.label.size);
     textBox.caretSpr.updateHitbox();
     textBox.caretSpr.onDraw = (sprite:FlxSprite) -> {sprite.y += 3; sprite.draw();}; // offsetting at it's finest in HScript
     add(textBox);
-    textBox.onChange = function(text:String) {
-        inputData.text = text;
+    textBox.onChange = function(_text:String) {
+        _text = StringTools.trim(_text);
+        var userText = userData.__getMessageString();
+        inputData.text = (_text == userText) ? "" : _text;
+        if (inputData.text.length <= 0 && !inputData.isHighlighting) {
+            textBox.label.text = userText;
+            textBox.changeSelection(0);
+            textBox.label.alpha = 0.5;
+        }
     };
 
     highlight_sprite.onDraw = (sprite:FlxSprite) -> {
@@ -111,9 +110,18 @@ function getValidTextKey(?justPressed:Bool = true) {
     return -1;
 }
 
+var justFocused = false;
 function updateTextBoxUI(elapsed) {
     var selected = (textBox.selectable && textBox.focused);
-    if (!selected) return;
+    if (!selected) return justFocused = false;
+    if (!justFocused) {
+        if (inputData.text.length <= 0) {
+            textBox.label.text = "";
+            textBox.label.alpha = 1;
+            textBox.changeSelection(0);
+        }
+        justFocused = true;
+    }
 
     // for now formatting like this (ugh I HATE IT!!! :SOB:) but reformat it when we finish it :(
     if (inputData.isHighlighting) {
@@ -142,3 +150,26 @@ function updateTextBoxUI(elapsed) {
     }
 
 }
+
+// Data handling
+
+/*
+    Format:
+    {id: 0, text: "hello!", embeds: [], components: []}
+*/
+/*
+    How messages should be stored:
+    in data/users/UserName/messages.json...
+    look in the readme.md for more info
+*/
+var messages = [
+    {}
+];
+
+var userData = {};
+function _setUserData(?data:Dynamic) {
+    userData = data ?? {name: "ERROR"};
+    userData.__getMessageString = () -> { return "Message @"+userData.name; };
+    textBox?.onChange(userData.__getMessageString());
+}
+_setUserData();
